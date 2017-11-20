@@ -1,5 +1,5 @@
 # pylint-exit
-Utility to handle pylint exit codes in an OS-friendly way.
+Utility to handle pylint exit codes on Linux in a scripting-friendly way.
 
 Pylint uses bit-encoded exit codes to convey the results of the pylint review,
 which means it will return with a non-zero return code even when the
@@ -15,6 +15,15 @@ the pylint return code and translate it into a scripting-friendly return code.
 any fatal messages issued (which might constitute a failure in the execution of
 pylint), or a usage error, and return a `0` or `1` return code that is more easily
 used in shell scripts.
+
+# Installation
+Download `pylint-exit` and make it executable.  You can call the script directly, or 
+put the directory containing the script onto your PATH environment variable to allow
+calling without a path prefix.
+
+```bash
+curl -o pylint-exit https://raw.githubusercontent.com/jongracecox/pylint-exit/master/pylint-exit && chmod +x pylint-exit
+```
 
 # Usage
 Add `|| pylint-exit $?` to the end of your existing Pylint command.  You can then
