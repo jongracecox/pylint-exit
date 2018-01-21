@@ -21,7 +21,7 @@ setup(
     py_modules = ['pylint_exit'],
     setup_requires=['setuptools', 'wheel'],
     tests_require=[],
-    install_requires=[],
+    install_requires=['bitarray'],
     data_files=[],
     options={
         'bdist_wheel': {'universal': True}
