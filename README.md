@@ -1,4 +1,7 @@
 # pylint-exit
+
+![image](https://travis-ci.org/jongracecox/pylint-exit.svg?branch=master)
+
 Utility to handle pylint exit codes on Linux in a scripting-friendly way.
 
 Pylint uses bit-encoded exit codes to convey the results of the pylint review,
