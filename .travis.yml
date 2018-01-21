@@ -3,7 +3,7 @@ python:
 - '2.7'
 - '3.6'
 install:
-- pip install -U setuptools pip
+- pip install -U setuptools pip -r requirements.txt
 script:
 - python ./test.py
 deploy:
