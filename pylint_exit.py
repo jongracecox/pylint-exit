@@ -2,6 +2,7 @@
 from __future__ import print_function
 import sys
 from bitarray import bitarray
+import argparse
 
 
 # Package information
@@ -74,9 +75,17 @@ def handle_exit_code(value):
     return exit_code
 
 
+def parse_args():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('pylint_exit_code', metavar='PYLINTRC', type=int,
+                    help='pylint return code')
+    return parser.parse_args()
+
+
 def main():
-    value = int(sys.argv[1])
-    exit_code = handle_exit_code(value)
+    args = parse_args()
+    exit_code = handle_exit_code(args.pylint_exit_code)
     sys.exit(exit_code)
 
 
