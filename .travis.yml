@@ -1,0 +1,17 @@
+language: python
+python:
+- '2.7'
+- '3.6'
+install:
+- pip install -U setuptools pip
+script:
+- python ./test.py
+deploy:
+  provider: pypi
+  user: jongracecox
+  password:
+    secure: iHbqS6UuYvCptCLP/QH+WotWB8mS4buwQi4lrFBmVGh6gCbiQ1dD/w8LiXv//uRoWizyPnJrIKCE23NHQft5g1cBkdjmlvKxkeX4ta37Lx3jSdyjqvFbANxjsxQ8LOMybmsrv7rj7CahbzI4xj3ZaR1VOV0LR8t7GsRrqhAaBvJW3jvmvdSeJcfIcE7Y/6Vjw60n+waW2EsalUo8esFwx7V/ilE2UkMf+9oamlwVGHRjkyQvoVwv8lT4vTVWpk2sVsf3egXlbbjh8B5yldCa+H1/pHIizW6Bb8TavXQHKHUaUi1ev+LOriYusKhrk9+pNIx4AjKznzdpPIzNBAmWckJResKTHF4MNHVQAggxMi8NYblYyjNdmSEU4BqLmlEAiqUwARtzSq+l1m9REIheZfSvR1o7pp+5K9f3nNvR5WiqorNvpoNG/bvgKOXSb0uqRYUkyqEVQnN6FH2utVHYa8tEVi1deQ4m/JqDKOiuf4q+Qcwj7XFZ1FiUib4mLLp5a/fEEMtT1tzHA4bNfu04UFAdiw6EjWidhiH/kbekjrMLN7Yy0dojeCWXhtcGFxmk+1sPVgQfC7XAbBvhCcDfmPj9AY8Tr2jDAejTZ7Bkw6gz5EYXFUtlB0yMC64auUZ/Pq4TMJROYA87zRGU/xCB9SqbBC0gMTELUFnq0Unbbd4=
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    branch: master

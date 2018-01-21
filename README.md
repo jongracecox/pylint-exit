@@ -17,12 +17,26 @@ pylint), or a usage error, and return a `0` or `1` return code that is more easi
 used in shell scripts.
 
 # Installation
-Download `pylint-exit` and make it executable.  You can call the script directly, or 
-put the directory containing the script onto your PATH environment variable to allow
-calling without a path prefix.
+
+The simplest way to install is via `pip`.
 
 ```bash
-curl -o pylint-exit https://raw.githubusercontent.com/jongracecox/pylint-exit/master/pylint-exit && chmod +x pylint-exit
+pip install pylint-exit
+```
+
+This will install the package, and will provide the `pylint-exit` command line utility.
+
+You can also manually install by downloading `pylint_exit.py`, and make it executable.
+
+```bash
+curl -o pylint-exit https://raw.githubusercontent.com/jongracecox/pylint-exit/master/pylint_exit.py && chmod +x pylint_exit.py
+```
+
+You should also consider creating a symbolic link so that the calls in the remainder of this
+README work as described.  Update `<path-to>` with where you downloaded the script.
+
+```bash
+ln -s <path-to>/pylint_exit.py /usr/local/bin/pylint-exit
 ```
 
 # Usage
@@ -85,4 +99,3 @@ issued message, and return the maximum final return code.
 | 32 | Usage error | 1 |
 
 This list is stored in `EXIT_CODES_LIST`, which can be customised if needed.
-
