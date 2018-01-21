@@ -42,6 +42,9 @@ README work as described.  Update `<path-to>` with where you downloaded the scri
 ln -s <path-to>/pylint_exit.py /usr/local/bin/pylint-exit
 ```
 
+*Note: If you perform a `--user` install with `pip` then you will need to ensure `~/.local/bin` appears in your `PATH`
+environment variable, otherwise the command line `pylint-exit` will not work.* 
+
 # Usage
 Add `|| pylint-exit $?` to the end of your existing Pylint command.  You can then
 use the updated `$?` return code in your shell script.
