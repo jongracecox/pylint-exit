@@ -6,7 +6,8 @@ python:
 install:
 - pip install -U setuptools pip -r requirements.txt -r build-requirements.txt
 script:
-- python ./test.py
+- coverage run -m doctest pylint_exit.py -v
+- coverage report -m
 deploy:
 - provider: pypi
   user: jongracecox

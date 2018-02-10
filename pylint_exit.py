@@ -31,16 +31,59 @@ def decode(value):
 
     Returns:
         list of raised exit codes.
+
+    Example:
+        >>> decode(1)
+        [(1, 'fatal message issued', 1)]
+        >>> decode(2)
+        [(2, 'error message issued', 0)]
+        >>> decode(3)
+        [(1, 'fatal message issued', 1), (2, 'error message issued', 0)]
     """
     return [x[1] for x in zip(bitarray(bin(value)[2:])[::-1], EXIT_CODES_LIST) if x[0]]
 
 
 def get_messages(value):
-    """Return a list of raised messages for a given pylint return code"""
+    """
+    Return a list of raised messages for a given pylint return code.
+
+    Args:
+        value(int): Return code from pylint command line.
+
+    Returns:
+        list of str: Raised messages.
+
+    Example:
+        >>> get_messages(1)
+        ['fatal message issued']
+        >>> get_messages(2)
+        ['error message issued']
+        >>> get_messages(3)
+        ['fatal message issued', 'error message issued']
+    """
     return [x[1] for x in decode(value)]
 
 
 def get_exit_code(value):
+    """
+    Return the exist code that should be returned.
+
+    Args:
+        value(int): Return code from pylint command line.
+
+    Returns:
+        int: Return code that should be returned when run as a command.
+
+    Example:
+        >>> get_exit_code(1)
+        1
+        >>> get_exit_code(2)
+        0
+        >>> get_exit_code(3)
+        1
+        >>> get_exit_code(12)
+        0
+    """
     exit_codes = [x[2] for x in decode(value)]
     if not exit_codes:
         return 0
@@ -49,11 +92,52 @@ def get_exit_code(value):
 
 
 def show_workings(value):
+    """
+    Display workings
+
+    Args:
+        value(int): Return code from pylint command line.
+
+    Example:
+        >>> show_workings(1)
+        1 (1) = ['fatal message issued']
+        >>> show_workings(12)
+        12 (1100) = ['warning message issued', 'refactor message issued']
+    """
     print("%s (%s) = %s" %
           (value, bin(value)[2:], [x[1][1] for x in zip(bitarray(bin(value)[2:])[::-1], EXIT_CODES_LIST) if x[0]]))
 
 
 def handle_exit_code(value):
+    """
+    Exit code handler.
+
+    Takes a pylint exist code as the input parameter, and
+    displays all the relevant console messages.
+
+    Args:
+        value(int): Return code from pylint command line.
+
+    Returns:
+        int: Return code that should be returned when run as a command.
+
+    Example:
+        >>> handle_exit_code(1)
+        The following messages were raised:
+        <BLANKLINE>
+          - fatal message issued
+        <BLANKLINE>
+        Fatal messages detected.  Failing...
+        1
+        >>> handle_exit_code(12)
+        The following messages were raised:
+        <BLANKLINE>
+          - warning message issued
+          - refactor message issued
+        <BLANKLINE>
+        No fatal messages detected.  Exiting gracefully...
+        0
+    """
     messages = get_messages(value)
     exit_code = get_exit_code(value)
 
@@ -73,6 +157,12 @@ def handle_exit_code(value):
         print("No fatal messages detected.  Exiting gracefully...")
 
     return exit_code
+
+
+def test():
+    # Test function
+    import doctest
+    doctest.testmod()
 
 
 def parse_args():
