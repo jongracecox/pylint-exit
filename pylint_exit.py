@@ -13,7 +13,7 @@ __summary__ = "Exit code handler for pylint command line utility."
 __uri__ = "https://github.com/jongracecox/pylint-exit"
 
 
-EXIT_CODES_LIST = [
+exit_code_list = [
     (1, 'fatal message issued', 1),
     (2, 'error message issued', 0),
     (4, 'warning message issued', 0),
@@ -41,7 +41,7 @@ def decode(value):
         >>> decode(3)
         [(1, 'fatal message issued', 1), (2, 'error message issued', 0)]
     """
-    return [x[1] for x in zip(bitarray(bin(value)[2:])[::-1], EXIT_CODES_LIST) if x[0]]
+    return [x[1] for x in zip(bitarray(bin(value)[2:])[::-1], exit_code_list) if x[0]]
 
 
 def get_messages(value):
@@ -106,7 +106,7 @@ def show_workings(value):
         12 (1100) = ['warning message issued', 'refactor message issued']
     """
     print("%s (%s) = %s" %
-          (value, bin(value)[2:], [x[1][1] for x in zip(bitarray(bin(value)[2:])[::-1], EXIT_CODES_LIST) if x[0]]))
+          (value, bin(value)[2:], [x[1][1] for x in zip(bitarray(bin(value)[2:])[::-1], exit_code_list) if x[0]]))
 
 
 def handle_exit_code(value):
@@ -208,11 +208,11 @@ def apply_enforcement_setting(key, value):
     position = POSITIONS[key]
 
     # unpack the tuple so it can be modified
-    encoded, description, enforce = EXIT_CODES_LIST[position]
+    encoded, description, enforce = exit_code_list[position]
     enforce = value  # set the element to True (error)
 
     # repack it back into a tuple to match existing data type
-    EXIT_CODES_LIST[position] = encoded, description, enforce
+    exit_code_list[position] = encoded, description, enforce
 
 
 def handle_cli_flags(namespace):
