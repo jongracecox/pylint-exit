@@ -1,9 +1,10 @@
 #!/usr/local/bin/python
 from __future__ import print_function
-import sys
-from bitarray import bitarray
-import argparse
 
+import argparse
+import sys
+
+from bitarray import bitarray
 
 # Package information
 version = __version__ = "0.1.0rc1"
@@ -168,13 +169,85 @@ def test():
 def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser()
+
     parser.add_argument('pylint_exit_code', metavar='PYLINTRC', type=int,
-                    help='pylint return code')
+                        help='pylint return code')
+
+    parser.add_argument('-efail', '--error-fail', action='store_true',
+                        help='Fail on issued error messages')
+
+    parser.add_argument('-wfail', '--warn-fail', action='store_true',
+                        help='fail on issued warnings messages')
+
+    parser.add_argument('-rfail', '--refactor-fail', action='store_true',
+                        help='fail on issued refactor messages')
+
+    parser.add_argument('-cfail', '--convention-fail', action='store_true',
+                        help='fail on issued convention messages')
+
     return parser.parse_args()
+
+
+def apply_enforcement_setting(key, value):
+    """
+    Apply an enforcement setting
+    Args:
+        key (str):
+        value (int):
+
+    Returns:
+
+    """
+    POSITIONS = {
+        "fatal": 0,
+        "error": 1,
+        "warning": 2,
+        "refactor": 3,
+        "convention": 4
+    }
+    position = POSITIONS[key]
+
+    # unpack the tuple so it can be modified
+    encoded, description, enforce = EXIT_CODES_LIST[position]
+    enforce = value  # set the element to True (error)
+
+    # repack it back into a tuple to match existing data type
+    EXIT_CODES_LIST[position] = encoded, description, enforce
+
+
+def handle_cli_flags(namespace):
+    """
+    Applies the CLI flags
+
+    Args:
+        namespace (argparse.Namespace): namespace from CLI arguments
+
+    """
+    # [
+    #   (1, 'fatal message issued', 1),
+    #   (2, 'error message issued', 0),
+    #   (4, 'warning message issued', 0),
+    #   (8, 'refactor message issued', 0),
+    #   (16, 'convention message issued', 0),
+    #   (32, 'usage error', 1)
+    # ]
+    if namespace.error_fail:  # fail on errors
+        apply_enforcement_setting("error", 1)
+
+    if namespace.warn_fail:
+        apply_enforcement_setting("warning", 1)
+
+    if namespace.refactor_fail:
+        apply_enforcement_setting("refactor", 1)
+
+    if namespace.convention_fail:
+        # error on conventions
+        apply_enforcement_setting("convention", 1)
 
 
 def main():
     args = parse_args()
+    handle_cli_flags(args)
     exit_code = handle_exit_code(args.pylint_exit_code)
     sys.exit(exit_code)
 
