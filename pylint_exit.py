@@ -191,11 +191,10 @@ def parse_args():
 def apply_enforcement_setting(key, value):
     """
     Apply an enforcement setting
-    Args:
-        key (str):
-        value (int):
 
-    Returns:
+    Args:
+        key (str): specific message level to set
+        value (int): new value for level
 
     """
     POSITIONS = {
@@ -205,6 +204,7 @@ def apply_enforcement_setting(key, value):
         "refactor": 3,
         "convention": 4
     }
+    # fetch the position from the dict
     position = POSITIONS[key]
 
     # unpack the tuple so it can be modified
