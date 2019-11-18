@@ -1,6 +1,11 @@
 # pylint-exit
 
-![image](https://travis-ci.org/jongracecox/pylint-exit.svg?branch=master)
+[![pypi package](https://badge.fury.io/py/pylint-exit.svg)](https://pypi.org/project/pylint-exit)
+[![build status](https://api.travis-ci.org/jongracecox/pylint-exit.svg?branch=master)](https://travis-ci.org/jongracecox/pylint-exit)
+[![downloads](https://img.shields.io/pypi/dm/pylint-exit.svg)](https://pypistats.org/packages/pylint-exit)
+[![GitHub last commit](https://img.shields.io/github/last-commit/jongracecox/pylint-exit.svg)](https://github.com/jongracecox/pylint-exit/commits/master)
+[![GitHub](https://img.shields.io/github/license/jongracecox/pylint-exit.svg)](https://github.com/jongracecox/pylint-exit/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/jongracecox/pylint-exit.svg?style=social)](https://github.com/jongracecox/pylint-exit/stargazers)
 
 Utility to handle pylint exit codes on Linux in a scripting-friendly way.
 
