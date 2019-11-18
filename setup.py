@@ -1,27 +1,23 @@
 #!/usr/bin/python
-import mister_bump
+import os
+import re
 from setuptools import setup
-from m2r import parse_from_file
-import restructuredtext_lint
 
+with open('README.md', encoding='utf-8') as f:
+    long_description = f.read()
 
-# Parser README.md into reStructuredText format
-rst_readme = parse_from_file('README.md')
+# Attempt to get version number from TravisCI environment variable
+version = os.environ.get('TRAVIS_TAG', default='0.0.0')
 
-# Validate the README, checking for errors
-errors = restructuredtext_lint.lint(rst_readme)
-
-# Raise an exception for any errors found
-if errors:
-    print(rst_readme)
-    raise ValueError('README.md contains errors: ',
-                     ', '.join([e.message for e in errors]))
+# Remove leading 'v'
+version = re.sub('^v', '', version)
 
 setup(
     name='pylint-exit',
     description='Exit code handler for pylint command line utility.',
-    long_description=rst_readme,
-    version=mister_bump.bump(style='rc'),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    version=version,
     author='Jon Grace-Cox',
     author_email='jongracecox@gmail.com',
     py_modules=['pylint_exit'],
