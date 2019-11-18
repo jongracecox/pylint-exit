@@ -7,12 +7,13 @@ import sys
 from bitarray import bitarray
 
 # Package information
-version = __version__ = "0.1.0rc1"
+version = __version__ = "1.1.0"
 __title__ = "pylint_exit"
 __summary__ = "Exit code handler for pylint command line utility."
 __uri__ = "https://github.com/jongracecox/pylint-exit"
 
 
+#: List of bit encoded exit codes, their meaning and whether to treat as a fatal message.
 exit_code_list = [
     (1, 'fatal message issued', 1),
     (2, 'error message issued', 0),
@@ -196,8 +197,20 @@ def apply_enforcement_setting(key, value):
         key (str): specific message level to set
         value (int): new value for level
 
+    Examples:
+
+        >>> import pylint_exit
+        >>> pylint_exit.exit_code_list[1]
+        (2, 'error message issued', 0)
+
+        >>> apply_enforcement_setting('error', 1)
+        >>> pylint_exit.exit_code_list[1]
+        (2, 'error message issued', 1)
+
+        >>> apply_enforcement_setting('error', 0)  # Set back to normal again
+
     """
-    POSITIONS = {
+    positions = {
         "fatal": 0,
         "error": 1,
         "warning": 2,
@@ -205,7 +218,7 @@ def apply_enforcement_setting(key, value):
         "convention": 4
     }
     # fetch the position from the dict
-    position = POSITIONS[key]
+    position = positions[key]
 
     # unpack the tuple so it can be modified
     encoded, description, enforce = exit_code_list[position]
@@ -221,6 +234,33 @@ def handle_cli_flags(namespace):
 
     Args:
         namespace (argparse.Namespace): namespace from CLI arguments
+
+    Examples:
+
+        Take a look at the current settings:
+
+            >>> import pylint_exit
+            >>> pylint_exit.exit_code_list[1]
+            (2, 'error message issued', 0)
+
+        Create a namespace with some settings:
+
+            >>> ns = argparse.Namespace()
+            >>> ns.error_fail = True
+            >>> ns.warn_fail = False
+            >>> ns.refactor_fail = False
+            >>> ns.convention_fail = False
+
+        Use handle_cli_flags to update the exit code list:
+
+            >>> handle_cli_flags(ns)
+            >>> pylint_exit.exit_code_list[1]
+            (2, 'error message issued', 1)
+
+        Set everything back to normal again:
+
+            >>> ns.error_fail = False
+            >>> handle_cli_flags(ns)
 
     """
     # [
