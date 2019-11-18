@@ -9,6 +9,8 @@ install:
 script:
 - coverage run -m doctest pylint_exit.py -v
 - coverage report -m
+before_deploy:
+- sed -i "s/^version = .*/version = __version__ = \"$TRAVIS_TAG\"/" pylint_exit.py
 deploy:
 - provider: pypi
   user: jongracecox
