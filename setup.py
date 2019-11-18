@@ -31,5 +31,8 @@ setup(
     url='https://github.com/jongracecox/pylint-exit',
     entry_points={
         'console_scripts': ['pylint-exit=pylint_exit:main'],
-    }
+    },
+    classifiers=[
+        'License :: OSI Approved :: MIT License'
+    ]
 )
