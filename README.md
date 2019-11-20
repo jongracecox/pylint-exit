@@ -145,7 +145,7 @@ fatal.
 
 
 ```bash
-> pylint --rcfile=.pylintrc --output-format=badformat mymodule.py || pylint-exit $?
+> pylint --rcfile=.pylintrc --output-format=badformat mymodule.py || pylint-exit --error-fail --warn-fail $?
 The following messages were raised:
 
   - error message issued
