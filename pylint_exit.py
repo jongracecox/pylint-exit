@@ -4,8 +4,6 @@ from __future__ import print_function
 import argparse
 import sys
 
-from bitarray import bitarray
-
 # Package information
 version = __version__ = "1.1.0"
 __title__ = "pylint_exit"
@@ -42,7 +40,7 @@ def decode(value):
         >>> decode(3)
         [(1, 'fatal message issued', 1), (2, 'error message issued', 0)]
     """
-    return [x[1] for x in zip(bitarray(bin(value)[2:])[::-1], exit_code_list) if x[0]]
+    return [x[1] for x in zip(format(value, "b")[::-1], exit_code_list) if int(x[0])]
 
 
 def get_messages(value):
@@ -106,8 +104,7 @@ def show_workings(value):
         >>> show_workings(12)
         12 (1100) = ['warning message issued', 'refactor message issued']
     """
-    print("%s (%s) = %s" %
-          (value, bin(value)[2:], [x[1][1] for x in zip(bitarray(bin(value)[2:])[::-1], exit_code_list) if x[0]]))
+    print("{0} ({0:b}) = {1}".format(value, [y[1] for y in decode(value)]))
 
 
 def handle_exit_code(value):
