@@ -21,7 +21,7 @@ setup(
     author='Jon Grace-Cox',
     author_email='jongracecox@gmail.com',
     py_modules=['pylint_exit'],
-    setup_requires=['setuptools', 'wheel', 'm2r'],
+    setup_requires=['setuptools', 'wheel'],
     tests_require=[],
     install_requires=[],
     data_files=[],
